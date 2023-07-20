@@ -2,13 +2,10 @@ package com.leonardocastro.ms.querycustomer.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.leonardocastro.ms.querycustomer.dtos.RequestDTO;
-import com.leonardocastro.ms.querycustomer.dtos.ZipDTO;
-import com.leonardocastro.ms.querycustomer.dtos.ZipMinDTO;
 import com.leonardocastro.ms.querycustomer.entities.CustomerEntity;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.parser.Entity;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;

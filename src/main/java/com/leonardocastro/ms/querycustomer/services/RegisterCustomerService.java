@@ -2,10 +2,11 @@ package com.leonardocastro.ms.querycustomer.services;
 
 import com.leonardocastro.ms.querycustomer.dtos.RequestDTO;
 import com.leonardocastro.ms.querycustomer.dtos.ResponseDTO;
-    import com.leonardocastro.ms.querycustomer.entities.CustomerEntity;
+import com.leonardocastro.ms.querycustomer.entities.CustomerEntity;
 import com.leonardocastro.ms.querycustomer.repositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 
 @Service
 public class RegisterCustomerService {
