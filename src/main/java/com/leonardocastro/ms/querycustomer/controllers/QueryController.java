@@ -1,6 +1,7 @@
 package com.leonardocastro.ms.querycustomer.controllers;
 
 import com.leonardocastro.ms.querycustomer.dtos.RequestDTO;
+import com.leonardocastro.ms.querycustomer.services.FindByIdCustomerService;
 import com.leonardocastro.ms.querycustomer.services.FindCustomerService;
 import com.leonardocastro.ms.querycustomer.services.RegisterCustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +15,17 @@ public class QueryController {
     RegisterCustomerService registerCustomerService;
     @Autowired
     FindCustomerService findCustomerService;
+    @Autowired
+    FindByIdCustomerService findByIdCustomerService;
 
     @GetMapping("/")
     public ResponseEntity<?> findAllCustomer() {
         return ResponseEntity.ok(findCustomerService.findAllCustomer());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> findByIdCustomer(@PathVariable @RequestBody Long id) {
+        return ResponseEntity.ok(findByIdCustomerService.findById(id));
     }
 
     @PostMapping("/register")
