@@ -6,7 +6,6 @@ import com.leonardocastro.ms.querycustomer.entities.CustomerEntity;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -16,20 +15,10 @@ import java.net.http.HttpResponse;
 public class QueryZipService {
     @SneakyThrows
     public CustomerEntity queryZip(RequestDTO requestDTO) {
-
         String uri = "https://zip-api.eu/api/v1/info/" + requestDTO.getCountryCode() + "-" + requestDTO.getZip();
-        HttpRequest httpRequest = HttpRequest.newBuilder().GET()
-                .uri(URI.create(uri))
-                .build();
+        HttpRequest httpRequest = HttpRequest.newBuilder().GET().uri(URI.create(uri)).build();
         HttpClient client = HttpClient.newBuilder().build();
-        HttpResponse<String> response = null;
-        try {
-            response = client.send(httpRequest, HttpResponse.BodyHandlers.ofString());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        HttpResponse<String> response = client.send(httpRequest, HttpResponse.BodyHandlers.ofString());
         CustomerEntity customerEntity = new CustomerEntity();
         CustomerEntity object = new ObjectMapper().readValue(response.body(), CustomerEntity.class);
         customerEntity.setCountry_code(requestDTO.getCountryCode());
@@ -40,5 +29,4 @@ public class QueryZipService {
         customerEntity.setPlace_name(object.getPlace_name());
         return customerEntity;
     }
-
 }
