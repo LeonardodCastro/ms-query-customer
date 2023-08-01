@@ -1,7 +1,7 @@
 package com.leonardocastro.ms.querycustomer.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.Data;
 
 @Entity
