@@ -6,6 +6,7 @@ import com.leonardocastro.ms.querycustomer.dtos.UpdateRequestDTO;
 import com.leonardocastro.ms.querycustomer.entities.CustomerEntity;
 import com.leonardocastro.ms.querycustomer.repositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -37,5 +38,15 @@ public class RegisterCustomerService {
                     customerRepository.save(customerUpdated);
         }
         return updateRequestDTO;
+    }
+
+    public HttpStatus deleteCustomerById(Long id) {
+        Optional<CustomerEntity> optionalCustomer = customerRepository.findById(id);
+        if (optionalCustomer.isPresent()){
+            CustomerEntity customerEntity = optionalCustomer.get();
+            customerRepository.delete(customerEntity);
+            return HttpStatus.NO_CONTENT;
+        }
+        return  HttpStatus.CONFLICT;
     }
 }
