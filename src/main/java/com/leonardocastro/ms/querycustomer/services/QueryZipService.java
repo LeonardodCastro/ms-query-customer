@@ -1,7 +1,7 @@
 package com.leonardocastro.ms.querycustomer.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.leonardocastro.ms.querycustomer.dtos.PostRequest;
+import com.leonardocastro.ms.querycustomer.controllers.request.PostRequest;
 import com.leonardocastro.ms.querycustomer.entities.CustomerEntity;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
