@@ -37,5 +37,8 @@ public class QueryController {
     public ResponseEntity<?> updateCustomer(@PathVariable Long id, @RequestBody UpdateRequestDTO updateRequestDTO){
         return ResponseEntity.ok(registerCustomerService.updateCustomerById(id, updateRequestDTO));
     }
-
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteCustomer(@PathVariable Long id){
+        return ResponseEntity.ok(registerCustomerService.deleteCustomerById(id));
+    }
 }
