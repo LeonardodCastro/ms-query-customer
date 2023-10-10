@@ -2,7 +2,7 @@ package com.leonardocastro.ms.querycustomer.services;
 
 import com.leonardocastro.ms.querycustomer.dtos.PostRequest;
 import com.leonardocastro.ms.querycustomer.dtos.ResponseDTO;
-import com.leonardocastro.ms.querycustomer.dtos.UpdateRequestDTO;
+import com.leonardocastro.ms.querycustomer.dtos.UpdateRequest;
 import com.leonardocastro.ms.querycustomer.entities.CustomerEntity;
 import com.leonardocastro.ms.querycustomer.repositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,18 +26,18 @@ public class RegisterCustomerService {
         return responseDTO;
     }
 
-    public UpdateRequestDTO updateCustomerById(Long id, UpdateRequestDTO updateRequestDTO) {
+    public UpdateRequest updateCustomerById(Long id, UpdateRequest updateRequest) {
         Optional<CustomerEntity> customerEntity = customerRepository.findById(id);
         if (customerEntity.isPresent()) {
             CustomerEntity customerUpdated;
             customerUpdated = customerEntity.get();
-            customerUpdated.setName(updateRequestDTO.name());
-                    customerUpdated.setAge(updateRequestDTO.age());
-                    customerUpdated.setCountry_code(updateRequestDTO.countryCode());
-                    customerUpdated.setZip(updateRequestDTO.zip());
+            customerUpdated.setName(updateRequest.name());
+                    customerUpdated.setAge(updateRequest.age());
+                    customerUpdated.setCountry_code(updateRequest.countryCode());
+                    customerUpdated.setZip(updateRequest.zip());
                     customerRepository.save(customerUpdated);
         }
-        return updateRequestDTO;
+        return updateRequest;
     }
 
     public HttpStatus deleteCustomerById(Long id) {

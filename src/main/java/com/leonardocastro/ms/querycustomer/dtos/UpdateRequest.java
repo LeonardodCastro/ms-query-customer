@@ -1,6 +1,6 @@
 package com.leonardocastro.ms.querycustomer.dtos;
 
-public record UpdateRequestDTO(
+public record UpdateRequest(
          String name,
          Integer age,
          String countryCode,
