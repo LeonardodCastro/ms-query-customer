@@ -4,6 +4,7 @@ import com.leonardocastro.ms.querycustomer.controllers.request.PostRequest;
 import com.leonardocastro.ms.querycustomer.controllers.response.CustomerResponse;
 import com.leonardocastro.ms.querycustomer.controllers.request.UpdateRequest;
 import com.leonardocastro.ms.querycustomer.entities.CustomerEntity;
+import com.leonardocastro.ms.querycustomer.enums.Errors;
 import com.leonardocastro.ms.querycustomer.exceptions.NotFoundException;
 import com.leonardocastro.ms.querycustomer.repositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ public class CustomerService {
 
  public CustomerEntity findById(Long id) throws NotFoundException {
     return customerRepository.findById(id)
-            .orElseThrow(() -> new NotFoundException(String.format("Customer [%d] does not exist", id), "0001"));
+            .orElseThrow(() -> new NotFoundException((String.format(Errors.QC001.getMessage(), id)), Errors.QC001.getErrorCode()));
 }
 
     public CustomerResponse saveCustomer(PostRequest postRequest) {
@@ -36,8 +37,8 @@ public class CustomerService {
         return new CustomerResponse(entity.getName(), entity.getAge(), entity.getZip());
     }
 
-    public UpdateRequest updateCustomerById(Long id, UpdateRequest updateRequest) {
-        Optional<CustomerEntity> customerEntity = customerRepository.findById(id);
+    public UpdateRequest updateCustomerById(Long id, UpdateRequest updateRequest) throws NotFoundException {
+        Optional<CustomerEntity> customerEntity = Optional.ofNullable(customerRepository.findById(id).orElseThrow(() -> new NotFoundException((String.format(Errors.QC001.getMessage(), id)), Errors.QC001.getErrorCode())));
         if (customerEntity.isPresent()) {
             CustomerEntity customerUpdated;
             customerUpdated = customerEntity.get();
@@ -50,8 +51,8 @@ public class CustomerService {
         return updateRequest;
     }
 
-    public HttpStatus deleteCustomerById(Long id) {
-        Optional<CustomerEntity> optionalCustomer = customerRepository.findById(id);
+    public HttpStatus deleteCustomerById(Long id) throws NotFoundException {
+        Optional<CustomerEntity> optionalCustomer = Optional.ofNullable(customerRepository.findById(id).orElseThrow(() -> new NotFoundException(String.format(Errors.QC001.getMessage(), id), Errors.QC001.getErrorCode())));
         if (optionalCustomer.isPresent()) {
             CustomerEntity customerEntity = optionalCustomer.get();
             customerRepository.delete(customerEntity);

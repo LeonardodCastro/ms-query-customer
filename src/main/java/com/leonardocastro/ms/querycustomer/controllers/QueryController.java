@@ -30,12 +30,12 @@ public class QueryController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<?> updateCustomer(@PathVariable Long id, @RequestBody UpdateRequest updateRequest) {
+    public ResponseEntity<?> updateCustomer(@PathVariable Long id, @RequestBody UpdateRequest updateRequest) throws NotFoundException {
         return ResponseEntity.ok(customerService.updateCustomerById(id, updateRequest));
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteCustomer(@PathVariable Long id) {
+    public ResponseEntity<?> deleteCustomer(@PathVariable Long id) throws NotFoundException {
         return ResponseEntity.ok(customerService.deleteCustomerById(id));
     }
 }
