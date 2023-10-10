@@ -2,6 +2,7 @@ package com.leonardocastro.ms.querycustomer.controllers;
 
 import com.leonardocastro.ms.querycustomer.controllers.request.PostRequest;
 import com.leonardocastro.ms.querycustomer.controllers.request.UpdateRequest;
+import com.leonardocastro.ms.querycustomer.exceptions.NotFoundException;
 import com.leonardocastro.ms.querycustomer.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +20,7 @@ public class QueryController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> findByIdCustomer(@PathVariable @RequestBody Long id) {
+    public ResponseEntity<?> findByIdCustomer(@PathVariable @RequestBody Long id) throws NotFoundException {
         return ResponseEntity.ok(customerService.findById(id));
     }
 

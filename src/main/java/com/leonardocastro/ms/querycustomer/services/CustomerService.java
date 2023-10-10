@@ -4,6 +4,7 @@ import com.leonardocastro.ms.querycustomer.controllers.request.PostRequest;
 import com.leonardocastro.ms.querycustomer.controllers.response.CustomerResponse;
 import com.leonardocastro.ms.querycustomer.controllers.request.UpdateRequest;
 import com.leonardocastro.ms.querycustomer.entities.CustomerEntity;
+import com.leonardocastro.ms.querycustomer.exceptions.NotFoundException;
 import com.leonardocastro.ms.querycustomer.repositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,10 +25,10 @@ public class CustomerService {
         return customerRepository.findAll();
     }
 
-    public Optional<CustomerEntity> findById(Long id) {
-        Optional<CustomerEntity> customer = customerRepository.findById(id);
-        return customer;
-    }
+ public CustomerEntity findById(Long id) throws NotFoundException {
+    return customerRepository.findById(id)
+            .orElseThrow(() -> new NotFoundException(String.format("Customer [%d] does not exist", id), "0001"));
+}
 
     public CustomerResponse saveCustomer(PostRequest postRequest) {
         CustomerEntity entity = queryZipService.queryZip(postRequest);
