@@ -6,7 +6,10 @@ import com.leonardocastro.ms.querycustomer.exceptions.NotFoundException;
 import com.leonardocastro.ms.querycustomer.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/customer")
@@ -25,7 +28,7 @@ public class QueryController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> saveCustomer(@RequestBody PostRequest postRequest) {
+    public ResponseEntity<?> saveCustomer(@RequestBody @Validated PostRequest postRequest) {
         return ResponseEntity.ok(customerService.saveCustomer(postRequest));
     }
 
