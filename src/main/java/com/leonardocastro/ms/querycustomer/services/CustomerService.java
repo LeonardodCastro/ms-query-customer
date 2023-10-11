@@ -28,7 +28,7 @@ public class CustomerService {
 
  public CustomerEntity findById(Long id) throws NotFoundException {
     return customerRepository.findById(id)
-            .orElseThrow(() -> new NotFoundException((String.format(Errors.QC001.getMessage(), id)), Errors.QC001.getErrorCode()));
+            .orElseThrow(() -> new NotFoundException((String.format(Errors.QC101.getMessage(), id)), Errors.QC101.getErrorCode()));
 }
 
     public CustomerResponse saveCustomer(PostRequest postRequest) {
@@ -38,7 +38,7 @@ public class CustomerService {
     }
 
     public UpdateRequest updateCustomerById(Long id, UpdateRequest updateRequest) throws NotFoundException {
-        Optional<CustomerEntity> customerEntity = Optional.ofNullable(customerRepository.findById(id).orElseThrow(() -> new NotFoundException((String.format(Errors.QC001.getMessage(), id)), Errors.QC001.getErrorCode())));
+        Optional<CustomerEntity> customerEntity = Optional.ofNullable(customerRepository.findById(id).orElseThrow(() -> new NotFoundException((String.format(Errors.QC101.getMessage(), id)), Errors.QC101.getErrorCode())));
         if (customerEntity.isPresent()) {
             CustomerEntity customerUpdated;
             customerUpdated = customerEntity.get();
@@ -52,7 +52,7 @@ public class CustomerService {
     }
 
     public HttpStatus deleteCustomerById(Long id) throws NotFoundException {
-        Optional<CustomerEntity> optionalCustomer = Optional.ofNullable(customerRepository.findById(id).orElseThrow(() -> new NotFoundException(String.format(Errors.QC001.getMessage(), id), Errors.QC001.getErrorCode())));
+        Optional<CustomerEntity> optionalCustomer = Optional.ofNullable(customerRepository.findById(id).orElseThrow(() -> new NotFoundException(String.format(Errors.QC101.getMessage(), id), Errors.QC101.getErrorCode())));
         if (optionalCustomer.isPresent()) {
             CustomerEntity customerEntity = optionalCustomer.get();
             customerRepository.delete(customerEntity);
