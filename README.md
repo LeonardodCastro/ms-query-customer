@@ -20,7 +20,7 @@ The microservice is able to search zip code in an external api which have a huge
 ### Adding new custumer in the database
 ![Alt Text](https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHFyMnY2bWdlMGx6N2dsdWwwdWcyY29iNzBibGh0aGlmeWp2NWN0dyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/mj812fGcAh1Rlcrtaa/giphy.gif)
 
-### Bringin all custumors from database
+### Bringin all custumers from database
 ![Alt Text](https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExdW91ZnVub2EzdGpoeDVuYmFqeHk2cGc1Yzk0eTA2bWhza2ozdG4yNiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Skq862LlJ3boLSuQD6/giphy.gif)
 
 ## ZipAPI
