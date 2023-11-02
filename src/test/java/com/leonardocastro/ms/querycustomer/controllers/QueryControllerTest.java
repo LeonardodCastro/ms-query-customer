@@ -38,44 +38,50 @@ class QueryControllerTest {
         ResponseEntity<?> response = queryController.findAllCustomers();
         Assertions.assertEquals(expectedCustomers, response.getBody());
     }
+
     @Test
     @DisplayName("Returning the same response")
-    void findAllCustomersTest_02(){
+    void findAllCustomersTest_02() {
         ResponseEntity<?> response = queryController.findAllCustomers();
         Assertions.assertEquals(ResponseEntity.ok(customerService.findAllCustomer()), response);
     }
 
     @Test
     @DisplayName("Returning not the same response")
-    void findAllCustomersTest_03(){
+    void findAllCustomersTest_03() {
         ResponseEntity<?> response = queryController.findAllCustomers();
         Assertions.assertNotEquals(ResponseEntity.ok(), response);
     }
+
     @Test
     @DisplayName("Not throwing an exception")
     void findAllCustomersTest_04() {
         ResponseEntity<?> allCustomers = queryController.findAllCustomers();
-        Assertions.assertDoesNotThrow(()-> allCustomers);
+        Assertions.assertDoesNotThrow(() -> allCustomers);
     }
+
     @Test
     @DisplayName("Returning a costumer")
     void findByIdCustomer_01() throws NotFoundException {
         CustomerEntity expectedCustomer = customerService.findById(id);
         ResponseEntity<?> response = queryController.findByIdCustomer(id);
-        Assertions.assertEquals(expectedCustomer,response.getBody());
+        Assertions.assertEquals(expectedCustomer, response.getBody());
     }
+
     @Test
     @DisplayName("Returning the same response")
     void findByIdCustomer_02() throws NotFoundException {
         ResponseEntity<?> response = queryController.findByIdCustomer(id);
         Assertions.assertEquals(ResponseEntity.ok(customerService.findById(id)), response);
     }
-   @Test
+
+    @Test
     @DisplayName("Returning not the same response")
     void findByIdCustomer_03() throws NotFoundException {
         ResponseEntity<?> response = queryController.findByIdCustomer(id);
         Assertions.assertNotEquals(ResponseEntity.ok(), response);
     }
+
     @Test
     void saveCustomer() {
     }
