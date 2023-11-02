@@ -70,6 +70,12 @@ class QueryControllerTest {
         ResponseEntity<?> response = queryController.findByIdCustomer(id);
         Assertions.assertEquals(ResponseEntity.ok(customerService.findById(id)), response);
     }
+   @Test
+    @DisplayName("Returning not the same response")
+    void findByIdCustomer_03() throws NotFoundException {
+        ResponseEntity<?> response = queryController.findByIdCustomer(id);
+        Assertions.assertNotEquals(ResponseEntity.ok(), response);
+    }
     @Test
     void saveCustomer() {
     }
