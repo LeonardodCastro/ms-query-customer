@@ -20,7 +20,7 @@ The microservice is able to search zip code in an external api which have a huge
 ### Adding new custumer in the database
 ![Alt Text](https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHFyMnY2bWdlMGx6N2dsdWwwdWcyY29iNzBibGh0aGlmeWp2NWN0dyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/mj812fGcAh1Rlcrtaa/giphy.gif)
 
-### Bringin all custumors from database
+### Bringin all custumers from database
 ![Alt Text](https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExdW91ZnVub2EzdGpoeDVuYmFqeHk2cGc1Yzk0eTA2bWhza2ozdG4yNiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Skq862LlJ3boLSuQD6/giphy.gif)
 
 ## ZipAPI
@@ -33,4 +33,9 @@ The  API allows you to easily access and integrate zip code data into your own a
 
 ## Documentation
 #### The project have a swagger documentation that could be aceesed by 👉 http://localhost:8080/swagger-ui.html
-<a href="https://ibb.co/wJ4sy9r"><img src="https://i.ibb.co/f8HvMhG/Captura-de-Tela-2023-10-04-s-19-29-24.png" alt="Captura-de-Tela-2023-10-04-s-19-29-24" border="0"></a>
+<a href="https://ibb.co/wJ4sy9r"><img src="https://github.com/LeonardodCastro/ms-query-customer/assets/134518796/7e0f4795-db31-40cf-ba63-29ea7cc4534b" alt="Captura-de-Tela-2023-10-04-s-19-29-24" border="0"></a>
+
+
+
+
+
