@@ -39,6 +39,12 @@ class QueryControllerTest {
         Assertions.assertEquals(expectedCustomers, response.getBody());
     }
     @Test
+    @DisplayName("Returning the same response")
+    void findAllCustomersTest_02(){
+        ResponseEntity<?> response = queryController.findAllCustomers();
+        Assertions.assertEquals(ResponseEntity.ok(customerService.findAllCustomer()), response);
+    }
+    @Test
     void saveCustomer() {
     }
 
