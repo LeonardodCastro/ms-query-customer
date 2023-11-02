@@ -9,8 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-
 @RestController
 @RequestMapping("/customer")
 public class QueryController {
@@ -18,7 +16,7 @@ public class QueryController {
     CustomerService customerService;
 
     @GetMapping("/")
-    public ResponseEntity<?> findAllCustomer() {
+    public ResponseEntity<?> findAllCustomers() {
         return ResponseEntity.ok(customerService.findAllCustomer());
     }
 
