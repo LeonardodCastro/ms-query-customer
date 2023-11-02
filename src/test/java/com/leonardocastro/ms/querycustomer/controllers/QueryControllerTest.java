@@ -58,6 +58,13 @@ class QueryControllerTest {
         Assertions.assertDoesNotThrow(()-> allCustomers);
     }
     @Test
+    @DisplayName("Returning a costumer")
+    void findByIdCustomer_01() throws NotFoundException {
+        CustomerEntity expectedCustomer = customerService.findById(id);
+        ResponseEntity<?> response = queryController.findByIdCustomer(id);
+        Assertions.assertEquals(expectedCustomer,response.getBody());
+    }
+    @Test
     void saveCustomer() {
     }
 
