@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.mockito.Mockito.when;
 
@@ -59,7 +60,7 @@ class QueryControllerTest {
     @DisplayName("Not throwing an exception")
     void findAllCustomersTest_04() {
         ResponseEntity<?> allCustomers = queryController.findAllCustomers();
-        Assertions.assertDoesNotThrow(() -> allCustomers);
+        assertDoesNotThrow(() -> allCustomers);
     }
 
     @Test
@@ -90,6 +91,13 @@ class QueryControllerTest {
         when(customerService.findById(null)).thenThrow(NotFoundException.class);
         Assertions.assertThrows(NotFoundException.class, () -> queryController.findByIdCustomer(null));
     }
+
+    @Test
+    @DisplayName("Not throwing NotFoundException")
+    void findByIdCustomer_05() throws NotFoundException {
+        assertDoesNotThrow(() -> queryController.findByIdCustomer(id));
+    }
+
 
     @Test
     void saveCustomer() {
