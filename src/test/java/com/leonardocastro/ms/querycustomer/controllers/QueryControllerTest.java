@@ -45,12 +45,17 @@ class QueryControllerTest {
         Assertions.assertEquals(ResponseEntity.ok(customerService.findAllCustomer()), response);
     }
 
-
     @Test
     @DisplayName("Returning not the same response")
     void findAllCustomersTest_03(){
         ResponseEntity<?> response = queryController.findAllCustomers();
         Assertions.assertNotEquals(ResponseEntity.ok(), response);
+    }
+    @Test
+    @DisplayName("Not throwing an exception")
+    void findAllCustomersTest_04() {
+        ResponseEntity<?> allCustomers = queryController.findAllCustomers();
+        Assertions.assertDoesNotThrow(()-> allCustomers);
     }
     @Test
     void saveCustomer() {
