@@ -9,11 +9,13 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.mockito.Mockito.when;
 
 class QueryControllerTest {
     @InjectMocks
@@ -50,7 +52,7 @@ class QueryControllerTest {
     @DisplayName("Returning not the same response")
     void findAllCustomersTest_03() {
         ResponseEntity<?> response = queryController.findAllCustomers();
-        Assertions.assertNotEquals(ResponseEntity.ok(), response);
+        assertNotEquals(ResponseEntity.ok(), response);
     }
 
     @Test
@@ -79,7 +81,14 @@ class QueryControllerTest {
     @DisplayName("Returning not the same response")
     void findByIdCustomer_03() throws NotFoundException {
         ResponseEntity<?> response = queryController.findByIdCustomer(id);
-        Assertions.assertNotEquals(ResponseEntity.ok(), response);
+        assertNotEquals(ResponseEntity.ok(), response);
+    }
+
+    @Test
+    @DisplayName("Throwing NotFoundException")
+    void findByIdCustomer_04() throws NotFoundException {
+        when(customerService.findById(null)).thenThrow(NotFoundException.class);
+        Assertions.assertThrows(NotFoundException.class, () -> queryController.findByIdCustomer(null));
     }
 
     @Test
