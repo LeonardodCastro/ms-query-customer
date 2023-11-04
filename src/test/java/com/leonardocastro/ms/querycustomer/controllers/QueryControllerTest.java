@@ -1,5 +1,6 @@
 package com.leonardocastro.ms.querycustomer.controllers;
 
+import com.leonardocastro.ms.querycustomer.controllers.request.PostRequest;
 import com.leonardocastro.ms.querycustomer.entities.CustomerEntity;
 import com.leonardocastro.ms.querycustomer.exceptions.NotFoundException;
 import com.leonardocastro.ms.querycustomer.services.CustomerService;
@@ -10,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
@@ -25,6 +27,7 @@ class QueryControllerTest {
     CustomerService customerService;
     private Long id;
     private CustomerEntity customer;
+    private PostRequest postRequest;
 
 
     @BeforeEach
@@ -32,6 +35,7 @@ class QueryControllerTest {
         MockitoAnnotations.openMocks(this);
         id = 1L;
         customer = new CustomerEntity();
+        postRequest = new PostRequest("name",20,"US", "33130");
     }
 
     @Test
@@ -100,7 +104,18 @@ class QueryControllerTest {
 
 
     @Test
-    void saveCustomer() {
+    @DisplayName("Returning the expected response")
+    void saveCustomer_01() {
+        ResponseEntity<?> response = queryController.saveCustomer(postRequest);
+        Assertions.assertEquals(ResponseEntity.ok(customerService.saveCustomer(postRequest)), response);
+    }
+
+    @Test
+    @DisplayName("Returning not different response")
+    void saveCustomer_02() {
+        ResponseEntity<?> expectedResponse = ResponseEntity.status(HttpStatus.OK).body("Customer created successfully");
+        ResponseEntity<?> response = queryController.saveCustomer(postRequest);
+        Assertions.assertNotEquals(expectedResponse, response);
     }
 
     @Test
