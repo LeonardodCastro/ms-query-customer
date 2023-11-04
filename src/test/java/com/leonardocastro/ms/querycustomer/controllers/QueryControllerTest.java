@@ -35,7 +35,7 @@ class QueryControllerTest {
         MockitoAnnotations.openMocks(this);
         id = 1L;
         customer = new CustomerEntity();
-        postRequest = new PostRequest("name",20,"US", "33130");
+        postRequest = new PostRequest("name", 20, "US", "33130");
     }
 
     @Test
