@@ -117,6 +117,7 @@ class QueryControllerTest {
         ResponseEntity<?> response = queryController.saveCustomer(postRequest);
         Assertions.assertNotEquals(expectedResponse, response);
     }
+
     @Test
     @DisplayName("Not throwing Exception")
     void saveCustomer_03() throws Exception {
