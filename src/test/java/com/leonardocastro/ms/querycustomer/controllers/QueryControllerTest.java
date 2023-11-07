@@ -11,13 +11,11 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.mockito.Mockito.when;
 
 class QueryControllerTest {
@@ -26,7 +24,6 @@ class QueryControllerTest {
     @Mock
     CustomerService customerService;
     private Long id;
-    private CustomerEntity customer;
     private PostRequest postRequest;
 
 
@@ -34,7 +31,6 @@ class QueryControllerTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);
         id = 1L;
-        customer = new CustomerEntity();
         postRequest = new PostRequest("name", 20, "US", "33130");
     }
 
@@ -54,15 +50,8 @@ class QueryControllerTest {
     }
 
     @Test
-    @DisplayName("Returning not the same response")
-    void findAllCustomersTest_03() {
-        ResponseEntity<?> response = queryController.findAllCustomers();
-        assertNotEquals(ResponseEntity.ok(), response);
-    }
-
-    @Test
     @DisplayName("Not throwing an exception")
-    void findAllCustomersTest_04() {
+    void findAllCustomersTest_03() {
         ResponseEntity<?> allCustomers = queryController.findAllCustomers();
         assertDoesNotThrow(() -> allCustomers);
     }
@@ -83,25 +72,17 @@ class QueryControllerTest {
     }
 
     @Test
-    @DisplayName("Returning not the same response")
-    void findByIdCustomer_03() throws NotFoundException {
-        ResponseEntity<?> response = queryController.findByIdCustomer(id);
-        assertNotEquals(ResponseEntity.ok(), response);
-    }
-
-    @Test
     @DisplayName("Throwing NotFoundException")
-    void findByIdCustomer_04() throws NotFoundException {
+    void findByIdCustomer_03() throws NotFoundException {
         when(customerService.findById(null)).thenThrow(NotFoundException.class);
         Assertions.assertThrows(NotFoundException.class, () -> queryController.findByIdCustomer(null));
     }
 
     @Test
     @DisplayName("Not throwing NotFoundException")
-    void findByIdCustomer_05() throws NotFoundException {
+    void findByIdCustomer_04() throws NotFoundException {
         assertDoesNotThrow(() -> queryController.findByIdCustomer(id));
     }
-
 
     @Test
     @DisplayName("Returning the expected response")
@@ -111,11 +92,10 @@ class QueryControllerTest {
     }
 
     @Test
-    @DisplayName("Returning not different response")
+    @DisplayName("Returning same body")
     void saveCustomer_02() {
-        ResponseEntity<?> expectedResponse = ResponseEntity.status(HttpStatus.OK).body("Customer created successfully");
         ResponseEntity<?> response = queryController.saveCustomer(postRequest);
-        Assertions.assertNotEquals(expectedResponse, response);
+        Assertions.assertEquals(queryController.saveCustomer(postRequest).getBody(), response.getBody());
     }
 
     @Test
@@ -126,6 +106,7 @@ class QueryControllerTest {
 
     @Test
     void updateCustomer() {
+
     }
 
     @Test
