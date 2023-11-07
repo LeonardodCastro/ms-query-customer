@@ -1,6 +1,7 @@
 package com.leonardocastro.ms.querycustomer.controllers;
 
 import com.leonardocastro.ms.querycustomer.controllers.request.PostRequest;
+import com.leonardocastro.ms.querycustomer.controllers.request.UpdateRequest;
 import com.leonardocastro.ms.querycustomer.entities.CustomerEntity;
 import com.leonardocastro.ms.querycustomer.exceptions.NotFoundException;
 import com.leonardocastro.ms.querycustomer.services.CustomerService;
@@ -25,6 +26,7 @@ class QueryControllerTest {
     CustomerService customerService;
     private Long id;
     private PostRequest postRequest;
+    private UpdateRequest updateRequest;
 
 
     @BeforeEach
@@ -32,6 +34,7 @@ class QueryControllerTest {
         MockitoAnnotations.openMocks(this);
         id = 1L;
         postRequest = new PostRequest("name", 20, "US", "33130");
+        updateRequest = new UpdateRequest("name",20, "US", "33130");
     }
 
     @Test
@@ -105,10 +108,12 @@ class QueryControllerTest {
     }
 
     @Test
-    void updateCustomer() {
+    @DisplayName("Returning the expected response")
+    void updateCustomer_01() throws NotFoundException {
+        ResponseEntity<?> response = queryController.updateCustomer(id, updateRequest);
+        Assertions.assertEquals(ResponseEntity.ok(customerService.updateCustomerById(id, updateRequest)), response);
 
     }
-
     @Test
     void deleteCustomer() {
     }
