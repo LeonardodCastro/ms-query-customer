@@ -115,6 +115,11 @@ class QueryControllerTest {
 
     }
     @Test
+    @DisplayName("Not throwing an exception")
+    void updateCustomer_02() throws NotFoundException {
+        Assertions.assertDoesNotThrow(()-> queryController.updateCustomer(id, updateRequest));
+    }
+    @Test
     void deleteCustomer() {
     }
 }
