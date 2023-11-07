@@ -120,6 +120,14 @@ class QueryControllerTest {
         Assertions.assertDoesNotThrow(()-> queryController.updateCustomer(id, updateRequest));
     }
     @Test
-    void deleteCustomer() {
+    @DisplayName("Returning the expected response")
+    void deleteCustomer_01() throws NotFoundException {
+        ResponseEntity<?> response = queryController.deleteCustomer(id);
+        Assertions.assertEquals(queryController.deleteCustomer(id),response);
+    }
+    @Test
+    @DisplayName("Not throwing an exception")
+    void deleteCustomer_02() throws NotFoundException {
+        Assertions.assertDoesNotThrow(()-> queryController.deleteCustomer(id));
     }
 }
