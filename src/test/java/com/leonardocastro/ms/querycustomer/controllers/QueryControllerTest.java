@@ -14,6 +14,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.ResponseEntity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -27,6 +28,7 @@ class QueryControllerTest {
     private Long id;
     private PostRequest postRequest;
     private UpdateRequest updateRequest;
+    private CustomerEntity customerEntity;
 
 
     @BeforeEach
@@ -35,16 +37,25 @@ class QueryControllerTest {
         id = 1L;
         postRequest = new PostRequest("name", 20, "US", "33130");
         updateRequest = new UpdateRequest("name",20, "US", "33130");
+        customerEntity = new CustomerEntity();
     }
 
     @Test
-    @DisplayName("Returning a list of customers")
+    @DisplayName("Returning an empty list of customers")
     void findAllCustomersTest_01() {
         List<CustomerEntity> expectedCustomers = customerService.findAllCustomer();
         ResponseEntity<?> response = queryController.findAllCustomers();
         Assertions.assertEquals(expectedCustomers, response.getBody());
     }
-
+   @Test
+@DisplayName("Returning a list of customers")
+void findAllCustomersTest_0() {
+       ResponseEntity<?> savedCustomer = queryController.saveCustomer(postRequest);
+       ResponseEntity<?> response = queryController.findAllCustomers();
+    List<CustomerEntity> expectedCustomers = new ArrayList<>();
+    expectedCustomers.add(customerEntity);
+    Assertions.assertEquals(savedCustomer.getBody(), response.getBody());
+}
     @Test
     @DisplayName("Returning the same response")
     void findAllCustomersTest_02() {
