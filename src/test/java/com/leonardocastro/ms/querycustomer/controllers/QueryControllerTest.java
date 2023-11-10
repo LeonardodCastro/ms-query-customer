@@ -36,7 +36,7 @@ class QueryControllerTest {
         MockitoAnnotations.openMocks(this);
         id = 1L;
         postRequest = new PostRequest("name", 20, "US", "33130");
-        updateRequest = new UpdateRequest("name",20, "US", "33130");
+        updateRequest = new UpdateRequest("name", 20, "US", "33130");
         customerEntity = new CustomerEntity();
     }
 
@@ -47,15 +47,17 @@ class QueryControllerTest {
         ResponseEntity<?> response = queryController.findAllCustomers();
         Assertions.assertEquals(expectedCustomers, response.getBody());
     }
-   @Test
-@DisplayName("Returning a list of customers")
-void findAllCustomersTest_0() {
-       ResponseEntity<?> savedCustomer = queryController.saveCustomer(postRequest);
-       ResponseEntity<?> response = queryController.findAllCustomers();
-    List<CustomerEntity> expectedCustomers = new ArrayList<>();
-    expectedCustomers.add(customerEntity);
-    Assertions.assertEquals(savedCustomer.getBody(), response.getBody());
-}
+
+    @Test
+    @DisplayName("Returning a list of customers")
+    void findAllCustomersTest_0() {
+        ResponseEntity<?> savedCustomer = queryController.saveCustomer(postRequest);
+        ResponseEntity<?> response = queryController.findAllCustomers();
+        List<CustomerEntity> expectedCustomers = new ArrayList<>();
+        expectedCustomers.add(customerEntity);
+        Assertions.assertEquals(savedCustomer.getBody(), response.getBody());
+    }
+
     @Test
     @DisplayName("Returning the same response")
     void findAllCustomersTest_02() {
@@ -125,20 +127,23 @@ void findAllCustomersTest_0() {
         Assertions.assertEquals(ResponseEntity.ok(customerService.updateCustomerById(id, updateRequest)), response);
 
     }
+
     @Test
     @DisplayName("Not throwing an exception")
     void updateCustomer_02() throws NotFoundException {
-        Assertions.assertDoesNotThrow(()-> queryController.updateCustomer(id, updateRequest));
+        Assertions.assertDoesNotThrow(() -> queryController.updateCustomer(id, updateRequest));
     }
+
     @Test
     @DisplayName("Returning the expected response")
     void deleteCustomer_01() throws NotFoundException {
         ResponseEntity<?> response = queryController.deleteCustomer(id);
-        Assertions.assertEquals(queryController.deleteCustomer(id),response);
+        Assertions.assertEquals(queryController.deleteCustomer(id), response);
     }
+
     @Test
     @DisplayName("Not throwing an exception")
     void deleteCustomer_02() throws NotFoundException {
-        Assertions.assertDoesNotThrow(()-> queryController.deleteCustomer(id));
+        Assertions.assertDoesNotThrow(() -> queryController.deleteCustomer(id));
     }
 }
