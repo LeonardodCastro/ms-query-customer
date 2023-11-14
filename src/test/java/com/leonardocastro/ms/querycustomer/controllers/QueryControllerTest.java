@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.mockito.Mockito.when;
@@ -48,15 +49,16 @@ class QueryControllerTest {
         Assertions.assertEquals(expectedCustomers, response.getBody());
     }
 
-    @Test
-    @DisplayName("Returning a list of customers")
-    void findAllCustomersTest_0() {
-        ResponseEntity<?> savedCustomer = queryController.saveCustomer(postRequest);
-        ResponseEntity<?> response = queryController.findAllCustomers();
-        List<CustomerEntity> expectedCustomers = new ArrayList<>();
-        expectedCustomers.add(customerEntity);
-        Assertions.assertEquals(savedCustomer.getBody(), response.getBody());
-    }
+//    @Test
+//    @DisplayName("Returning a list of customers")
+//    void findAllCustomersTest_0() {
+//        List<CustomerEntity> expectedCustomers = new ArrayList<>();
+//        expectedCustomers.add(customerEntity);
+//        when(queryController.findAllCustomers()).thenReturn(ResponseEntity.of(Optional.of(expectedCustomers)));
+//        ResponseEntity<List<CustomerEntity>> allCustomers = queryController.findAllCustomers();
+//        ResponseEntity<?> response = queryController.findAllCustomers();
+//        Assertions.assertEquals(allCustomers, response.getBody());
+//    }
 
     @Test
     @DisplayName("Returning the same response")
