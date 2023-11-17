@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.mockito.Mockito.when;
 
@@ -43,22 +44,19 @@ class QueryControllerTest {
 
     @Test
     @DisplayName("Returning an empty list of customers")
-    void findAllCustomersTest_01() {
+    void findAllCustomersTest() {
         List<CustomerEntity> expectedCustomers = customerService.findAllCustomer();
         ResponseEntity<?> response = queryController.findAllCustomers();
         Assertions.assertEquals(expectedCustomers, response.getBody());
     }
 
-//    @Test
-//    @DisplayName("Returning a list of customers")
-//    void findAllCustomersTest_0() {
-//        List<CustomerEntity> expectedCustomers = new ArrayList<>();
-//        expectedCustomers.add(customerEntity);
-//        when(queryController.findAllCustomers()).thenReturn(ResponseEntity.of(Optional.of(expectedCustomers)));
-//        ResponseEntity<List<CustomerEntity>> allCustomers = queryController.findAllCustomers();
-//        ResponseEntity<?> response = queryController.findAllCustomers();
-//        Assertions.assertEquals(allCustomers, response.getBody());
-//    }
+    @Test
+    @DisplayName("Returning a list of customers")
+    void findAllCustomersTest_01() {
+        List<CustomerEntity> expectedCustomers = new ArrayList<>();
+        ResponseEntity<List<CustomerEntity>> allCustomers = queryController.findAllCustomers();
+        Assertions.assertEquals(expectedCustomers, allCustomers.getBody());
+    }
 
     @Test
     @DisplayName("Returning the same response")
