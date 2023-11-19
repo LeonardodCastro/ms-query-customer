@@ -4,6 +4,7 @@ import com.leonardocastro.ms.querycustomer.entities.CustomerEntity;
 import com.leonardocastro.ms.querycustomer.repositories.CustomerRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -15,6 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 class CustomerServiceTest {
     @InjectMocks
@@ -28,14 +31,22 @@ class CustomerServiceTest {
         MockitoAnnotations.openMocks(this);
 
     }
-
     @Test
-    void findAllCustomer() {
+    @DisplayName("findAllCustomer positive case")
+    public void findAllCustomer() {
         List<CustomerEntity> expectedCustomers = new ArrayList<>();
+        expectedCustomers.add(new CustomerEntity());
+        expectedCustomers.add(new CustomerEntity());
+        when(customerRepository.findAll()).thenReturn(expectedCustomers);
 
-        List<CustomerEntity> allCustomer = customerService.findAllCustomer();
-        Assertions.assertEquals(expectedCustomers,allCustomer);
+        List<CustomerEntity> actualCustomers = customerService.findAllCustomer();
+
+        assertEquals(expectedCustomers, actualCustomers);
+        assertEquals(2, actualCustomers.size());
+
+        verify(customerRepository).findAll();
     }
+
 
     @Test
     void findById() {
