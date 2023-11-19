@@ -47,6 +47,19 @@ class CustomerServiceTest {
         verify(customerRepository).findAll();
     }
 
+    @Test
+    @DisplayName("findAllCustomer empty list case")
+    public void findAllCustomer_EmptyListCase(){
+        List<CustomerEntity> emptyList = new ArrayList<>();
+        when(customerRepository.findAll()).thenReturn(emptyList);
+
+        List<CustomerEntity> response = customerService.findAllCustomer();
+
+        Assertions.assertEquals(response,emptyList);
+        Assertions.assertEquals(0,response.size());
+
+        verify(customerRepository).findAll();
+    }
 
     @Test
     void findById() {
