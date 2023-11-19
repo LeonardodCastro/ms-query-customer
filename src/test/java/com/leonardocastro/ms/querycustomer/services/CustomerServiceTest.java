@@ -43,6 +43,7 @@ class CustomerServiceTest {
 
         assertEquals(expectedCustomers, actualCustomers);
         assertEquals(2, actualCustomers.size());
+        assertDoesNotThrow(()-> actualCustomers);
 
         verify(customerRepository).findAll();
     }
