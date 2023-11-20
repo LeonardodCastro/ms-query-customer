@@ -26,10 +26,10 @@ public class CustomerService {
         return customerRepository.findAll();
     }
 
- public CustomerEntity findById(Long id) throws NotFoundException {
-    return customerRepository.findById(id)
-            .orElseThrow(() -> new NotFoundException((String.format(Errors.QC101.getMessage(), id)), Errors.QC101.getErrorCode()));
-}
+    public CustomerEntity findById(Long id) throws NotFoundException {
+        return customerRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException((String.format(Errors.QC101.getMessage(), id)), Errors.QC101.getErrorCode()));
+    }
 
     public CustomerResponse saveCustomer(PostRequest postRequest) {
         CustomerEntity entity = queryZipService.queryZip(postRequest);
