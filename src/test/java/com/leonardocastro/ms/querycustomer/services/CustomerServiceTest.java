@@ -1,6 +1,7 @@
 package com.leonardocastro.ms.querycustomer.services;
 
 import com.leonardocastro.ms.querycustomer.entities.CustomerEntity;
+import com.leonardocastro.ms.querycustomer.exceptions.NotFoundException;
 import com.leonardocastro.ms.querycustomer.repositories.CustomerRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -8,12 +9,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
@@ -24,12 +24,13 @@ class CustomerServiceTest {
     CustomerService customerService;
     @Mock
     CustomerRepository customerRepository;
+    CustomerEntity customerEntity;
 
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-
+        customerEntity = new CustomerEntity();
     }
     @Test
     @DisplayName("findAllCustomer positive case")
@@ -63,11 +64,23 @@ class CustomerServiceTest {
     }
 
     @Test
-    void findById() {
+    void findById() throws NotFoundException {
+        customerEntity.setId(1L);
+        when(customerRepository.findById(1L)).thenReturn(Optional.of(customerEntity));
+
+        CustomerEntity service = customerService.findById(1L);
+
+        assertNotNull(service);
+        assertEquals(1L, service.getId());
+        assertDoesNotThrow(()-> service);
     }
+
+
+
 
     @Test
     void saveCustomer() {
+        
     }
 
     @Test
