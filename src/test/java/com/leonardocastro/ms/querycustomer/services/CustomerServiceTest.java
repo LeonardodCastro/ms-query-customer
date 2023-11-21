@@ -64,6 +64,7 @@ class CustomerServiceTest {
     }
 
     @Test
+    @DisplayName("Should return an Id")
     void findById() throws NotFoundException {
         customerEntity.setId(1L);
         when(customerRepository.findById(1L)).thenReturn(Optional.of(customerEntity));
@@ -74,7 +75,11 @@ class CustomerServiceTest {
         assertEquals(1L, service.getId());
         assertDoesNotThrow(()-> service);
     }
-
+    @Test
+    @DisplayName("Should throw an exception when Id doesn't exist")
+    void findById_NegativeCase() throws NotFoundException {
+        Assertions.assertThrows(NotFoundException.class, ()-> customerService.findById(999L));
+    }
 
 
 
