@@ -28,7 +28,6 @@ class QueryControllerTest {
     private Long id;
     private PostRequest postRequest;
     private UpdateRequest updateRequest;
-    private CustomerEntity customerEntity;
 
 
     @BeforeEach
@@ -37,7 +36,6 @@ class QueryControllerTest {
         id = 1L;
         postRequest = new PostRequest("name", 20, "US", "33130");
         updateRequest = new UpdateRequest("name", 20, "US", "33130");
-        customerEntity = new CustomerEntity();
     }
 
     @Test
