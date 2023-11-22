@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -86,13 +87,14 @@ class CustomerServiceTest {
     }
 
     @Test
+    @DisplayName("should save a customer")
     public void saveCustomer() {
-        PostRequest postRequest = new PostRequest("name",25,"US", "33130");
+        PostRequest postRequest = new PostRequest("name", 25, "US", "33130");
         when(queryZipService.queryZip(postRequest)).thenReturn(customerEntity);
 
         CustomerResponse response = customerService.saveCustomer(postRequest);
 
-        assertDoesNotThrow(()-> response);
+        assertDoesNotThrow(() -> response);
         assertNotNull(response);
     }
 
