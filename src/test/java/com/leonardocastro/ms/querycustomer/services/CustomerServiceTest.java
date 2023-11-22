@@ -1,5 +1,7 @@
 package com.leonardocastro.ms.querycustomer.services;
 
+import com.leonardocastro.ms.querycustomer.controllers.request.PostRequest;
+import com.leonardocastro.ms.querycustomer.controllers.response.CustomerResponse;
 import com.leonardocastro.ms.querycustomer.entities.CustomerEntity;
 import com.leonardocastro.ms.querycustomer.exceptions.NotFoundException;
 import com.leonardocastro.ms.querycustomer.repositories.CustomerRepository;
@@ -24,6 +26,8 @@ class CustomerServiceTest {
     CustomerService customerService;
     @Mock
     CustomerRepository customerRepository;
+    @Mock
+    QueryZipService queryZipService;
     CustomerEntity customerEntity;
 
 
@@ -81,11 +85,15 @@ class CustomerServiceTest {
         Assertions.assertThrows(NotFoundException.class, ()-> customerService.findById(999L));
     }
 
-
-
     @Test
-    void saveCustomer() {
-        
+    public void saveCustomer() {
+        PostRequest postRequest = new PostRequest("name",25,"US", "33130");
+        when(queryZipService.queryZip(postRequest)).thenReturn(customerEntity);
+
+        CustomerResponse response = customerService.saveCustomer(postRequest);
+
+        assertDoesNotThrow(()-> response);
+        assertNotNull(response);
     }
 
     @Test
