@@ -1,13 +1,9 @@
 package com.leonardocastro.ms.querycustomer.services;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.leonardocastro.ms.querycustomer.QueryMapper;
-import com.leonardocastro.ms.querycustomer.controllers.request.PostRequest;
 import com.leonardocastro.ms.querycustomer.entities.CustomerEntity;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.annotation.PropertySources;
 import org.springframework.stereotype.Service;
 
 import java.net.URI;
@@ -17,7 +13,7 @@ import java.net.http.HttpResponse;
 
 @Service
 public class QueryZipService {
-    QueryMapper mapper = QueryMapper.INSTANCE;
+    private static final QueryMapper MAPPER = QueryMapper.INSTANCE;
     @Value("${api-endpoint}")
     private String endpoint;
 
@@ -27,7 +23,7 @@ public class QueryZipService {
         HttpRequest httpRequest = HttpRequest.newBuilder().GET().uri(URI.create(uri)).build();
         HttpClient client = HttpClient.newBuilder().build();
         HttpResponse<String> response = client.send(httpRequest, HttpResponse.BodyHandlers.ofString());
-        CustomerEntity body = mapper.jsonToCustomer(response.body());
-        return mapper.toResponse(body, customer);
+        CustomerEntity body = MAPPER.jsonToCustomer(response.body());
+        return MAPPER.toResponse(body, customer);
     }
 }

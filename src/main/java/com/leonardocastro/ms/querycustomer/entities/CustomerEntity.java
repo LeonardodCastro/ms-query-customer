@@ -1,8 +1,9 @@
 package com.leonardocastro.ms.querycustomer.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import javax.persistence.*;
 import lombok.Data;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = "customer_entity")

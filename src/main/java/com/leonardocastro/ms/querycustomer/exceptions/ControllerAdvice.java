@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 @org.springframework.web.bind.annotation.ControllerAdvice
 public class ControllerAdvice {
     @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<ErrorResponse> notFoundException(NotFoundException ex, WebRequest request){
+    public ResponseEntity<ErrorResponse> notFoundException(NotFoundException ex, WebRequest request) {
         ErrorResponse errorResponse = new ErrorResponse(
                 HttpStatus.NOT_FOUND.value(),
                 ex.message,
@@ -26,14 +26,14 @@ public class ControllerAdvice {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ErrorResponse> argumentNotValidException(MethodArgumentNotValidException ex, WebRequest request){
+    public ResponseEntity<ErrorResponse> argumentNotValidException(MethodArgumentNotValidException ex, WebRequest request) {
         ErrorResponse errorResponse = new ErrorResponse(
                 HttpStatus.BAD_REQUEST.value(),
                 Errors.QC201.getMessage(),
                 Errors.QC201.getErrorCode(),
                 ex.getBindingResult().getFieldErrors().stream()
-    .map(fieldError -> new FieldErrorResponse(fieldError.getDefaultMessage(),(fieldError.getField())))
-    .collect(Collectors.toList()));
+                        .map(fieldError -> new FieldErrorResponse(fieldError.getDefaultMessage(), (fieldError.getField())))
+                        .collect(Collectors.toList()));
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 }

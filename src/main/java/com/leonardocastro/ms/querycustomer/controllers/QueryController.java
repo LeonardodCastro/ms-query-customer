@@ -23,7 +23,7 @@ public class QueryController {
     @GetMapping("/")
     public ResponseEntity<List<CustomerEntity>> findAllCustomers() {
         List<CustomerEntity> allCustomer = customerService.findAllCustomer();
-        return  ResponseEntity.ok(allCustomer);
+        return ResponseEntity.ok(allCustomer);
     }
 
     @GetMapping("/{id}")

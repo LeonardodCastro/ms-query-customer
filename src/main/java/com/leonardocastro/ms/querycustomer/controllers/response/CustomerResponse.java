@@ -4,5 +4,5 @@ public record CustomerResponse(
         String name,
         Integer age,
         String zip
-){
+) {
 }

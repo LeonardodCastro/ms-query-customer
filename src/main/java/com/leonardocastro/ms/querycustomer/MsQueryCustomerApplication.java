@@ -8,8 +8,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class MsQueryCustomerApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(MsQueryCustomerApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(MsQueryCustomerApplication.class, args);
+    }
 
 }

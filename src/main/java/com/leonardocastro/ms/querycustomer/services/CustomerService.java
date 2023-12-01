@@ -1,9 +1,8 @@
 package com.leonardocastro.ms.querycustomer.services;
 
 import com.leonardocastro.ms.querycustomer.QueryMapper;
-import com.leonardocastro.ms.querycustomer.controllers.request.PostRequest;
-import com.leonardocastro.ms.querycustomer.controllers.response.CustomerResponse;
 import com.leonardocastro.ms.querycustomer.controllers.request.UpdateRequest;
+import com.leonardocastro.ms.querycustomer.controllers.response.CustomerResponse;
 import com.leonardocastro.ms.querycustomer.entities.CustomerEntity;
 import com.leonardocastro.ms.querycustomer.enums.Errors;
 import com.leonardocastro.ms.querycustomer.exceptions.NotFoundException;
