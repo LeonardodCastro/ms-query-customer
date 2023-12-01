@@ -1,5 +1,6 @@
 package com.leonardocastro.ms.querycustomer.controllers;
 
+import com.leonardocastro.ms.querycustomer.QueryMapper;
 import com.leonardocastro.ms.querycustomer.controllers.request.PostRequest;
 import com.leonardocastro.ms.querycustomer.controllers.request.UpdateRequest;
 import com.leonardocastro.ms.querycustomer.entities.CustomerEntity;
@@ -17,6 +18,7 @@ import java.util.List;
 public class QueryController {
     @Autowired
     CustomerService customerService;
+    QueryMapper mapper = QueryMapper.INSTANCE;
 
     @GetMapping("/")
     public ResponseEntity<List<CustomerEntity>> findAllCustomers() {
@@ -31,7 +33,8 @@ public class QueryController {
 
     @PostMapping("/register")
     public ResponseEntity<?> saveCustomer(@RequestBody @Validated PostRequest postRequest) {
-        return ResponseEntity.ok(customerService.saveCustomer(postRequest));
+        CustomerEntity customer = mapper.toCustomer(postRequest);
+        return ResponseEntity.ok(customerService.saveCustomer(customer));
     }
 
     @PutMapping("/update/{id}")

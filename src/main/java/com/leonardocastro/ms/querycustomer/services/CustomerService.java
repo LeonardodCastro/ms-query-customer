@@ -1,5 +1,6 @@
 package com.leonardocastro.ms.querycustomer.services;
 
+import com.leonardocastro.ms.querycustomer.QueryMapper;
 import com.leonardocastro.ms.querycustomer.controllers.request.PostRequest;
 import com.leonardocastro.ms.querycustomer.controllers.response.CustomerResponse;
 import com.leonardocastro.ms.querycustomer.controllers.request.UpdateRequest;
@@ -31,10 +32,11 @@ public class CustomerService {
                 .orElseThrow(() -> new NotFoundException((String.format(Errors.QC101.getMessage(), id)), Errors.QC101.getErrorCode()));
     }
 
-    public CustomerResponse saveCustomer(PostRequest postRequest) {
-        CustomerEntity entity = queryZipService.queryZip(postRequest);
+    public CustomerResponse saveCustomer(CustomerEntity customer) {
+        CustomerEntity entity = queryZipService.queryZip(customer);
         customerRepository.save(entity);
-        return new CustomerResponse(entity.getName(), entity.getAge(), entity.getZip());
+        QueryMapper mapper = QueryMapper.INSTANCE;
+        return mapper.toCustomerResponse(entity);
     }
 
     public UpdateRequest updateCustomerById(Long id, UpdateRequest updateRequest) throws NotFoundException {

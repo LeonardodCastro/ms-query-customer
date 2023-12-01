@@ -100,7 +100,7 @@ class QueryControllerTest {
     @DisplayName("Returning the expected response")
     void saveCustomer_01() {
         ResponseEntity<?> response = queryController.saveCustomer(postRequest);
-        Assertions.assertEquals(ResponseEntity.ok(customerService.saveCustomer(postRequest)), response);
+        Assertions.assertEquals(ResponseEntity.ok(customerService.saveCustomer(new CustomerEntity())), response);
     }
 
     @Test

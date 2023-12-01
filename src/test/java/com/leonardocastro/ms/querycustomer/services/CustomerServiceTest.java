@@ -90,9 +90,9 @@ class CustomerServiceTest {
     @DisplayName("should save a customer")
     public void saveCustomer() {
         PostRequest postRequest = new PostRequest("Jhon", 25, "US", "33130");
-        when(queryZipService.queryZip(postRequest)).thenReturn(customerEntity);
+        when(queryZipService.queryZip(new CustomerEntity())).thenReturn(customerEntity);
 
-        CustomerResponse response = customerService.saveCustomer(postRequest);
+        CustomerResponse response = customerService.saveCustomer(new CustomerEntity());
 
         assertDoesNotThrow(() -> response);
         assertNotNull(response);
@@ -100,8 +100,8 @@ class CustomerServiceTest {
     @Test
     public void saveCustomer_NegativeCase(){
         PostRequest postRequest = new PostRequest("", 0, "INVALID", "NONE");
-        when(queryZipService.queryZip(postRequest)).thenReturn(new CustomerEntity());
-        CustomerResponse response = customerService.saveCustomer(postRequest);
+        when(queryZipService.queryZip(new CustomerEntity())).thenReturn(new CustomerEntity());
+        CustomerResponse response = customerService.saveCustomer(new CustomerEntity());
 
         assertNull(response.name());
         assertNull(response.age());
