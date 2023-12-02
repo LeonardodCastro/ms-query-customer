@@ -8,9 +8,6 @@ import com.leonardocastro.ms.querycustomer.entities.CustomerEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
-import springfox.documentation.spring.web.json.Json;
-
-import java.net.http.HttpResponse;
 
 @Mapper
 public interface QueryMapper {
@@ -33,11 +30,11 @@ public interface QueryMapper {
 
 
     //todo: faz o mesmo esquema do de cima
-    @Mapping(source = "updateRequest.name",  target = "name")
-    @Mapping(source = "updateRequest.age",  target = "age")
-    @Mapping(source = "updateRequest.countryCode",  target = "country_code")
-    @Mapping(source = "updateRequest.zip",  target = "zip")
-    @Mapping(source = "customerEntity.id",  target = "id")
+    @Mapping(source = "updateRequest.name", target = "name")
+    @Mapping(source = "updateRequest.age", target = "age")
+    @Mapping(source = "updateRequest.countryCode", target = "country_code")
+    @Mapping(source = "updateRequest.zip", target = "zip")
+    @Mapping(source = "customerEntity.id", target = "id")
 //    @Mapping(source = "customerEntity.state",  target = "state")
 //    @Mapping(source = "customerEntity.place_name",  target = "place_name")
     CustomerEntity toUpdate(CustomerEntity customerEntity, UpdateRequest updateRequest);

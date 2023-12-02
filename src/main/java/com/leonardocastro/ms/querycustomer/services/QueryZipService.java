@@ -1,7 +1,6 @@
 package com.leonardocastro.ms.querycustomer.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.JsonObject;
 import com.leonardocastro.ms.querycustomer.QueryMapper;
 import com.leonardocastro.ms.querycustomer.entities.CustomerEntity;
 import lombok.SneakyThrows;
