@@ -4,6 +4,7 @@ import com.leonardocastro.ms.querycustomer.QueryMapper;
 import com.leonardocastro.ms.querycustomer.controllers.request.PostRequest;
 import com.leonardocastro.ms.querycustomer.controllers.request.UpdateRequest;
 import com.leonardocastro.ms.querycustomer.controllers.response.CustomerResponse;
+import com.leonardocastro.ms.querycustomer.controllers.response.UpdateResponse;
 import com.leonardocastro.ms.querycustomer.entities.CustomerEntity;
 import com.leonardocastro.ms.querycustomer.exceptions.NotFoundException;
 import com.leonardocastro.ms.querycustomer.services.CustomerService;
@@ -41,7 +42,7 @@ public class QueryController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<?> updateCustomer(@PathVariable Long id, @RequestBody UpdateRequest updateRequest) throws NotFoundException {
+    public ResponseEntity<UpdateResponse> updateCustomer(@PathVariable Long id, @RequestBody UpdateRequest updateRequest) throws NotFoundException {
         return ResponseEntity.ok(customerService.updateCustomerById(id, updateRequest));
     }
 

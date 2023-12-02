@@ -45,13 +45,8 @@ public class CustomerService {
         Optional<CustomerEntity> customerEntity = Optional.ofNullable(customerRepository.findById(id).orElseThrow(() -> new NotFoundException((String.format(Errors.QC101.getMessage(), id)), Errors.QC101.getErrorCode())));
         if (customerEntity.isPresent()) {
             CustomerEntity updatedCustomerXPTO = MAPPER.toUpdate(customerEntity.get(), updateRequest);
-            CustomerEntity customerUpdated;
-            customerUpdated = customerEntity.get();
-            customerUpdated.setName(updateRequest.name());
-            customerUpdated.setAge(updateRequest.age());
-            customerUpdated.setCountry_code(updateRequest.countryCode());
-            customerUpdated.setZip(updateRequest.zip());
-            customerRepository.save(customerUpdated);
+            CustomerEntity updatedAfterQuery = queryZipService.queryZip(updatedCustomerXPTO);
+            customerRepository.save(updatedAfterQuery);
         }
         return MAPPER.toUpdateResponse(updateRequest);
     }

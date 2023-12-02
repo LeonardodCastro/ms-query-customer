@@ -38,8 +38,8 @@ public interface QueryMapper {
     @Mapping(source = "updateRequest.countryCode",  target = "country_code")
     @Mapping(source = "updateRequest.zip",  target = "zip")
     @Mapping(source = "customerEntity.id",  target = "id")
-    @Mapping(source = "customerEntity.state",  target = "state")
-    @Mapping(source = "customerEntity.place_name",  target = "place_name")
+//    @Mapping(source = "customerEntity.state",  target = "state")
+//    @Mapping(source = "customerEntity.place_name",  target = "place_name")
     CustomerEntity toUpdate(CustomerEntity customerEntity, UpdateRequest updateRequest);
 
     UpdateResponse toUpdateResponse(UpdateRequest request);
