@@ -31,7 +31,7 @@ public class QueryController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> findByIdCustomer(@PathVariable @RequestBody Long id) throws NotFoundException {
+    public ResponseEntity<CustomerEntity> findByIdCustomer(@PathVariable @RequestBody Long id) throws NotFoundException {
         return ResponseEntity.ok(customerService.findById(id));
     }
 
