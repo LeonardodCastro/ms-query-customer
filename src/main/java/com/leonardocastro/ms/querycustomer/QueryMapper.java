@@ -28,17 +28,12 @@ public interface QueryMapper {
     @Mapping(source = "apiResponse.place_name", target = "place_name")
     CustomerEntity toResponse(CustomerEntity apiResponse, CustomerEntity customer);
 
-
-    //todo: faz o mesmo esquema do de cima
     @Mapping(source = "updateRequest.name", target = "name")
     @Mapping(source = "updateRequest.age", target = "age")
     @Mapping(source = "updateRequest.countryCode", target = "country_code")
     @Mapping(source = "updateRequest.zip", target = "zip")
     @Mapping(source = "customerEntity.id", target = "id")
-//    @Mapping(source = "customerEntity.state",  target = "state")
-//    @Mapping(source = "customerEntity.place_name",  target = "place_name")
     CustomerEntity toUpdate(CustomerEntity customerEntity, UpdateRequest updateRequest);
 
     UpdateResponse toUpdateResponse(UpdateRequest request);
-
 }

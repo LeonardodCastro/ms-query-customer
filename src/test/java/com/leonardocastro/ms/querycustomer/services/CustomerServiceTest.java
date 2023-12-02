@@ -74,10 +74,10 @@ class CustomerServiceTest {
         customerEntity.setId(1L);
         when(customerRepository.findById(1L)).thenReturn(Optional.of(customerEntity));
 
-        CustomerEntity service = customerService.findById(1L);
+        CustomerResponse service = customerService.findById(1L);
 
         assertNotNull(service);
-        assertEquals(1L, service.getId());
+        assertEquals(1L, service);
         assertDoesNotThrow(()-> service);
     }
     @Test

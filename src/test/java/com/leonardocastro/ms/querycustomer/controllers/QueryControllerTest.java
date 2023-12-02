@@ -2,6 +2,7 @@ package com.leonardocastro.ms.querycustomer.controllers;
 
 import com.leonardocastro.ms.querycustomer.controllers.request.PostRequest;
 import com.leonardocastro.ms.querycustomer.controllers.request.UpdateRequest;
+import com.leonardocastro.ms.querycustomer.controllers.response.CustomerResponse;
 import com.leonardocastro.ms.querycustomer.entities.CustomerEntity;
 import com.leonardocastro.ms.querycustomer.exceptions.NotFoundException;
 import com.leonardocastro.ms.querycustomer.services.CustomerService;
@@ -71,7 +72,7 @@ class QueryControllerTest {
     @Test
     @DisplayName("Returning a costumer")
     void findByIdCustomer_01() throws NotFoundException {
-        CustomerEntity expectedCustomer = customerService.findById(id);
+        CustomerResponse expectedCustomer = customerService.findById(id);
         ResponseEntity<?> response = queryController.findByIdCustomer(id);
         Assertions.assertEquals(expectedCustomer, response.getBody());
     }
