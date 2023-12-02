@@ -3,6 +3,7 @@ package com.leonardocastro.ms.querycustomer.controllers;
 import com.leonardocastro.ms.querycustomer.QueryMapper;
 import com.leonardocastro.ms.querycustomer.controllers.request.PostRequest;
 import com.leonardocastro.ms.querycustomer.controllers.request.UpdateRequest;
+import com.leonardocastro.ms.querycustomer.controllers.response.CustomerResponse;
 import com.leonardocastro.ms.querycustomer.entities.CustomerEntity;
 import com.leonardocastro.ms.querycustomer.exceptions.NotFoundException;
 import com.leonardocastro.ms.querycustomer.services.CustomerService;
@@ -34,7 +35,7 @@ public class QueryController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> saveCustomer(@RequestBody @Validated PostRequest postRequest) {
+    public ResponseEntity<CustomerResponse> saveCustomer(@RequestBody @Validated PostRequest postRequest) {
         CustomerEntity customer = mapper.toCustomer(postRequest);
         return ResponseEntity.ok(customerService.saveCustomer(customer));
     }

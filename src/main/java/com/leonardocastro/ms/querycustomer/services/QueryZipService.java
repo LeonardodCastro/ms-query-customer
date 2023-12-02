@@ -1,5 +1,7 @@
 package com.leonardocastro.ms.querycustomer.services;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.JsonObject;
 import com.leonardocastro.ms.querycustomer.QueryMapper;
 import com.leonardocastro.ms.querycustomer.entities.CustomerEntity;
 import lombok.SneakyThrows;
@@ -14,6 +16,7 @@ import java.net.http.HttpResponse;
 @Service
 public class QueryZipService {
     private static final QueryMapper MAPPER = QueryMapper.INSTANCE;
+    private static final ObjectMapper JSON = new ObjectMapper();
     @Value("${api-endpoint}")
     private String endpoint;
 
@@ -23,7 +26,7 @@ public class QueryZipService {
         HttpRequest httpRequest = HttpRequest.newBuilder().GET().uri(URI.create(uri)).build();
         HttpClient client = HttpClient.newBuilder().build();
         HttpResponse<String> response = client.send(httpRequest, HttpResponse.BodyHandlers.ofString());
-        CustomerEntity body = MAPPER.jsonToCustomer(response.body());
-        return MAPPER.toResponse(body, customer);
+        CustomerEntity bodyJson = JSON.readValue(response.body(), CustomerEntity.class);
+        return MAPPER.toResponse(bodyJson, customer);
     }
 }

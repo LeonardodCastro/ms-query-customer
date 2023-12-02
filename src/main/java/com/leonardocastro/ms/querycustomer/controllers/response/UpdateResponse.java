@@ -1,8 +1,9 @@
 package com.leonardocastro.ms.querycustomer.controllers.response;
 
-public record CustomerResponse(
+public record UpdateResponse(
         String name,
         Integer age,
+        String countryCode,
         String zip
 ) {
 }

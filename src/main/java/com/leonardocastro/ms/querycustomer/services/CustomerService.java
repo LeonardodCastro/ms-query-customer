@@ -3,6 +3,7 @@ package com.leonardocastro.ms.querycustomer.services;
 import com.leonardocastro.ms.querycustomer.QueryMapper;
 import com.leonardocastro.ms.querycustomer.controllers.request.UpdateRequest;
 import com.leonardocastro.ms.querycustomer.controllers.response.CustomerResponse;
+import com.leonardocastro.ms.querycustomer.controllers.response.UpdateResponse;
 import com.leonardocastro.ms.querycustomer.entities.CustomerEntity;
 import com.leonardocastro.ms.querycustomer.enums.Errors;
 import com.leonardocastro.ms.querycustomer.exceptions.NotFoundException;
@@ -23,6 +24,8 @@ public class CustomerService {
     private final QueryZipService queryZipService;
     private final CustomerRepository customerRepository;
 
+    private static final QueryMapper MAPPER = QueryMapper.INSTANCE;
+
     public List<CustomerEntity> findAllCustomer() {
         return customerRepository.findAll();
     }
@@ -35,13 +38,13 @@ public class CustomerService {
     public CustomerResponse saveCustomer(CustomerEntity customer) {
         CustomerEntity entity = queryZipService.queryZip(customer);
         customerRepository.save(entity);
-        QueryMapper mapper = QueryMapper.INSTANCE;
-        return mapper.toCustomerResponse(entity);
+        return MAPPER.toCustomerResponse(entity);
     }
 
-    public UpdateRequest updateCustomerById(Long id, UpdateRequest updateRequest) throws NotFoundException {
+    public UpdateResponse updateCustomerById(Long id, UpdateRequest updateRequest) throws NotFoundException {
         Optional<CustomerEntity> customerEntity = Optional.ofNullable(customerRepository.findById(id).orElseThrow(() -> new NotFoundException((String.format(Errors.QC101.getMessage(), id)), Errors.QC101.getErrorCode())));
         if (customerEntity.isPresent()) {
+            CustomerEntity updatedCustomerXPTO = MAPPER.toUpdate(customerEntity.get(), updateRequest);
             CustomerEntity customerUpdated;
             customerUpdated = customerEntity.get();
             customerUpdated.setName(updateRequest.name());
@@ -50,7 +53,7 @@ public class CustomerService {
             customerUpdated.setZip(updateRequest.zip());
             customerRepository.save(customerUpdated);
         }
-        return updateRequest;
+        return MAPPER.toUpdateResponse(updateRequest);
     }
 
     public HttpStatus deleteCustomerById(Long id) throws NotFoundException {
