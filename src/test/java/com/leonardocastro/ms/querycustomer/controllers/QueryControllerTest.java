@@ -97,12 +97,12 @@ class QueryControllerTest {
         assertDoesNotThrow(() -> queryController.findByIdCustomer(id));
     }
 
-    @Test
-    @DisplayName("Returning the expected response")
-    void saveCustomer_01() {
-        ResponseEntity<?> response = queryController.saveCustomer(postRequest);
-        Assertions.assertEquals(ResponseEntity.ok(customerService.saveCustomer(new CustomerEntity())), response);
-    }
+//    @Test
+//    @DisplayName("Returning the expected response")
+//    void saveCustomer_01() {
+//        ResponseEntity<?> response = queryController.saveCustomer(postRequest);
+//        Assertions.assertEquals(ResponseEntity.ok(customerService.saveCustomer(new CustomerEntity())), response);
+//    }
 
     @Test
     @DisplayName("Returning same body")

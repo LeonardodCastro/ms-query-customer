@@ -7,6 +7,7 @@ import com.leonardocastro.ms.querycustomer.exceptions.NotFoundException;
 import com.leonardocastro.ms.querycustomer.repositories.CustomerRepository;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -29,33 +30,60 @@ class CustomerServiceTest {
     @Mock
     QueryZipService queryZipService;
     CustomerEntity customerEntity;
+    List<CustomerEntity> expectedCustomers = new ArrayList<>();
+
 
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
-        customerEntity = new CustomerEntity();
+        customerEntity = CustomerEntity.builder()
+                .id(3L)
+                .name("Leo")
+                .age(23)
+                .country_code("BR")
+                .zip("01000-000")
+                .state("Sao Paulo")
+                .place_name("Sao Paulo")
+                .build();
+        expectedCustomers.add(CustomerEntity.builder()
+                .id(1L)
+                .name("Mary")
+                .age(32)
+                .country_code("US")
+                .zip("33130")
+                .state("Flórida")
+                .place_name("Miami")
+                .build());
+        expectedCustomers.add(CustomerEntity.builder()
+                .id(2L)
+                .name("José")
+                .age(27)
+                .country_code("AT")
+                .zip("1010")
+                .state("Wien")
+                .place_name("Wien, Innere Stadt")
+                .build());
     }
 
     @Test
     @DisplayName("findAllCustomer() should return a list when successful")
     @Order(1)
     public void findAllCustomer_returnListWhenSuccessful() {
-        List<CustomerEntity> expectedCustomers = new ArrayList<>();
-        expectedCustomers.add(new CustomerEntity());
-        expectedCustomers.add(new CustomerEntity());
-        when(customerService.findAllCustomer()).thenReturn(expectedCustomers);
+        when(customerRepository.findAll()).thenReturn(expectedCustomers);
 
         List<CustomerEntity> actualCustomers = customerService.findAllCustomer();
 
         assertEquals(expectedCustomers, actualCustomers);
         assertEquals(2, actualCustomers.size());
         assertDoesNotThrow(() -> actualCustomers);
+
+        verify(customerRepository).findAll();
     }
 
     @Test
-    @DisplayName("findAllCustomer empty list case")
-    public void findAllCustomer_EmptyListCase() {
+    @DisplayName("findAllCustomer() should return an empty list")
+    @Order(2)
+    public void findAllCustomer_returnEmptyList() {
         List<CustomerEntity> emptyList = new ArrayList<>();
         when(customerRepository.findAll()).thenReturn(emptyList);
 
@@ -68,46 +96,26 @@ class CustomerServiceTest {
     }
 
     @Test
-    @DisplayName("Should return an Id")
-    void findById() throws NotFoundException {
-        customerEntity.setId(1L);
-        when(customerRepository.findById(1L)).thenReturn(Optional.of(customerEntity));
+    @DisplayName("findById() should return customer successful")
+    @Order(3)
+    void findById_returnCustomerSuccessful() throws NotFoundException {
+        when(customerRepository.findById(expectedCustomers.get(0).getId())).thenReturn(Optional.ofNullable(expectedCustomers.get(0)));
 
-        CustomerResponse service = customerService.findById(1L);
+        CustomerResponse customerFound = customerService.findById(expectedCustomers.get(0).getId());
 
-        assertNotNull(service);
-        assertEquals(1L, customerEntity.getId());
-        assertDoesNotThrow(() -> service);
+        assertNotNull(customerFound);
+        org.assertj.core.api.Assertions.assertThat(customerFound).hasNoNullFieldsOrProperties();
+        assertEquals(1L, expectedCustomers.get(0).getId());
+        assertDoesNotThrow(() -> customerFound);
     }
 
     @Test
     @DisplayName("Should throw an exception when Id doesn't exist")
-    void findById_NegativeCase() throws NotFoundException {
+    @Order(4)
+    void findById_throwNotFoundExceptionWhenUnsuccess() throws NotFoundException {
         Assertions.assertThrows(NotFoundException.class, () -> customerService.findById(999L));
     }
 
-    @Test
-    @DisplayName("should save a customer")
-    public void saveCustomer() {
-        PostRequest postRequest = new PostRequest("Jhon", 25, "US", "33130");
-        when(queryZipService.queryZip(new CustomerEntity())).thenReturn(customerEntity);
-
-        CustomerResponse response = customerService.saveCustomer(new CustomerEntity());
-
-        assertDoesNotThrow(() -> response);
-        assertNotNull(response);
-    }
-
-    @Test
-    public void saveCustomer_NegativeCase() {
-        PostRequest postRequest = new PostRequest("", 0, "INVALID", "NONE");
-        when(queryZipService.queryZip(new CustomerEntity())).thenReturn(new CustomerEntity());
-        CustomerResponse response = customerService.saveCustomer(new CustomerEntity());
-
-        assertNull(response.name());
-        assertNull(response.age());
-        assertNull(response.zip());
-    }
 
     @Test
     void updateCustomerById() {

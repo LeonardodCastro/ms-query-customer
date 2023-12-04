@@ -1,6 +1,7 @@
 package com.leonardocastro.ms.querycustomer.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -9,6 +10,7 @@ import javax.persistence.*;
 @Table(name = "customer_entity")
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Builder
 public class CustomerEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
