@@ -1,16 +1,13 @@
 package com.leonardocastro.ms.querycustomer.services;
 
-import com.leonardocastro.ms.querycustomer.controllers.request.PostRequest;
 import com.leonardocastro.ms.querycustomer.controllers.response.CustomerResponse;
 import com.leonardocastro.ms.querycustomer.entities.CustomerEntity;
 import com.leonardocastro.ms.querycustomer.exceptions.NotFoundException;
 import com.leonardocastro.ms.querycustomer.repositories.CustomerRepository;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
@@ -31,7 +28,6 @@ class CustomerServiceTest {
     QueryZipService queryZipService;
     CustomerEntity customerEntity;
     List<CustomerEntity> expectedCustomers = new ArrayList<>();
-
 
 
     @BeforeEach
@@ -116,6 +112,17 @@ class CustomerServiceTest {
         Assertions.assertThrows(NotFoundException.class, () -> customerService.findById(999L));
     }
 
+    @Test
+    @DisplayName("should save a customer when success")
+    @Order(5)
+    public void saveCustomer_saveNewCustomer() {
+        when(queryZipService.queryZip(customerEntity)).thenReturn(customerEntity);
+        CustomerResponse savedCustomer = customerService.saveCustomer(customerEntity);
+
+        org.assertj.core.api.Assertions.assertThat(savedCustomer).hasNoNullFieldsOrProperties();
+        Assertions.assertSame(customerEntity.getName(), savedCustomer.name());
+        assertDoesNotThrow(() -> savedCustomer);
+    }
 
     @Test
     void updateCustomerById() {
