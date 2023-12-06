@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -100,7 +101,7 @@ class CustomerServiceTest {
         CustomerResponse customerFound = customerService.findById(expectedCustomers.get(0).getId());
 
         assertNotNull(customerFound);
-        org.assertj.core.api.Assertions.assertThat(customerFound).hasNoNullFieldsOrProperties();
+        assertThat(customerFound).hasNoNullFieldsOrProperties();
         assertEquals(1L, expectedCustomers.get(0).getId());
         assertDoesNotThrow(() -> customerFound);
     }
@@ -115,15 +116,28 @@ class CustomerServiceTest {
     @Test
     @DisplayName("should save a customer when success")
     @Order(5)
-    public void saveCustomer_saveNewCustomer() {
+    public void saveCustomer_shouldReturnCustomrWhenSuccess() throws NotFoundException {
         when(queryZipService.queryZip(customerEntity)).thenReturn(customerEntity);
+        when(customerRepository.save(customerEntity)).thenReturn(customerEntity);
+
         CustomerResponse savedCustomer = customerService.saveCustomer(customerEntity);
 
-        org.assertj.core.api.Assertions.assertThat(savedCustomer).hasNoNullFieldsOrProperties();
-        Assertions.assertSame(customerEntity.getName(), savedCustomer.name());
+        assertThat(savedCustomer).hasNoNullFieldsOrProperties();
+        Assertions.assertEquals(customerEntity.getAge(),savedCustomer.age());
+        Assertions.assertEquals(customerEntity.getName(), savedCustomer.name());
         assertDoesNotThrow(() -> savedCustomer);
     }
 
+//    @Test
+//    public void saveCustomer_NegativeCase() {
+//        PostRequest postRequest = new PostRequest("", 0, "INVALID", "NONE");
+//        when(queryZipService.queryZip(new CustomerEntity())).thenReturn(new CustomerEntity());
+//        CustomerResponse response = customerService.saveCustomer(new CustomerEntity());
+//
+//        assertNull(response.name());
+//        assertNull(response.age());
+//        assertNull(response.zip());
+//    }
     @Test
     void updateCustomerById() {
     }
