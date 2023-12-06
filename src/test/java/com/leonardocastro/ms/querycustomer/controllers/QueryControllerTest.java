@@ -41,7 +41,7 @@ class QueryControllerTest {
 
     @Test
     @DisplayName("Returning an empty list of customers")
-    void findAllCustomersTest() {
+    void findAll_CustomersTest() {
         List<CustomerEntity> expectedCustomers = customerService.findAllCustomer();
         ResponseEntity<?> response = queryController.findAllCustomers();
         Assertions.assertEquals(expectedCustomers, response.getBody());

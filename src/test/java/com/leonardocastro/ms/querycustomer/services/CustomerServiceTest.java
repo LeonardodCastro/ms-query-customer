@@ -1,7 +1,10 @@
 package com.leonardocastro.ms.querycustomer.services;
 
+import com.leonardocastro.ms.querycustomer.controllers.request.UpdateRequest;
 import com.leonardocastro.ms.querycustomer.controllers.response.CustomerResponse;
+import com.leonardocastro.ms.querycustomer.controllers.response.UpdateResponse;
 import com.leonardocastro.ms.querycustomer.entities.CustomerEntity;
+import com.leonardocastro.ms.querycustomer.enums.Errors;
 import com.leonardocastro.ms.querycustomer.exceptions.NotFoundException;
 import com.leonardocastro.ms.querycustomer.repositories.CustomerRepository;
 import org.junit.jupiter.api.*;
@@ -14,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -128,21 +132,39 @@ class CustomerServiceTest {
         assertDoesNotThrow(() -> savedCustomer);
     }
 
-//    @Test
-//    public void saveCustomer_NegativeCase() {
-//        PostRequest postRequest = new PostRequest("", 0, "INVALID", "NONE");
-//        when(queryZipService.queryZip(new CustomerEntity())).thenReturn(new CustomerEntity());
-//        CustomerResponse response = customerService.saveCustomer(new CustomerEntity());
-//
-//        assertNull(response.name());
-//        assertNull(response.age());
-//        assertNull(response.zip());
-//    }
     @Test
-    void updateCustomerById() {
+    @DisplayName("Should uptdate a customer when success")
+    @Order(6)
+    void updateCustomerById_shouldUpdateCostumerWhenSuccess() throws NotFoundException {
+        UpdateRequest updateRequest = new UpdateRequest("Charlie",23,"33130", "US");
+        when(customerRepository.findById(customerEntity.getId())).thenReturn(Optional.of(customerEntity));
+
+        Optional<CustomerEntity> customerEntityFound = customerRepository.findById(customerEntity.getId());
+        UpdateResponse updateResponse = customerService.updateCustomerById(customerEntity.getId(), updateRequest);
+
+        Assertions.assertEquals(customerEntityFound.get(),customerEntity);
+
+        assertThat(updateResponse).hasNoNullFieldsOrProperties();
+        Assertions.assertEquals(updateRequest.name(),updateResponse.name());
+        Assertions.assertEquals(updateRequest.age(),updateResponse.age());
+        Assertions.assertEquals(updateRequest.countryCode(),updateResponse.countryCode());
+        Assertions.assertEquals(updateRequest.zip(),updateResponse.zip());
+
+        Assertions.assertDoesNotThrow(()-> updateResponse);
     }
 
     @Test
+    @DisplayName("updateCustomerById() should throw NotFoundException")
+    @Order(6)
+    void updateCustomerById_shouldThrowNotFoundException()  {
+        UpdateRequest invalidUpdateRequest = new UpdateRequest(null,null,null, null);
+
+        NotFoundException ex = new NotFoundException((String.format(Errors.QC101.getMessage(), customerEntity.getId())), Errors.QC101.getErrorCode());
+        when(customerRepository.findById(any())).thenThrow(ex);
+
+        Assertions.assertThrows(ex.getClass(), ()-> customerService.updateCustomerById(customerEntity.getId(), invalidUpdateRequest));
+    }
+        @Test
     void deleteCustomerById() {
     }
 }

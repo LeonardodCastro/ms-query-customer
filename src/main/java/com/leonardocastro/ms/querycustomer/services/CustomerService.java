@@ -43,9 +43,9 @@ public class CustomerService {
     public UpdateResponse updateCustomerById(Long id, UpdateRequest updateRequest) throws NotFoundException {
         Optional<CustomerEntity> customerEntity = Optional.ofNullable(customerRepository.findById(id).orElseThrow(() -> new NotFoundException((String.format(Errors.QC101.getMessage(), id)), Errors.QC101.getErrorCode())));
         if (customerEntity.isPresent()) {
-            CustomerEntity updatedCustomerXPTO = MAPPER.toUpdate(customerEntity.get(), updateRequest);
-            CustomerEntity updatedAfterQuery = queryZipService.queryZip(updatedCustomerXPTO);
-            customerRepository.save(updatedAfterQuery);
+            CustomerEntity updatedCustomer = MAPPER.toUpdate(customerEntity.get(), updateRequest);
+            CustomerEntity updatedCustomerAfterQuery = queryZipService.queryZip(updatedCustomer);
+            customerRepository.save(updatedCustomerAfterQuery);
         }
         return MAPPER.toUpdateResponse(updateRequest);
     }
