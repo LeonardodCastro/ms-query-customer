@@ -12,12 +12,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -127,7 +127,7 @@ class CustomerServiceTest {
         CustomerResponse savedCustomer = customerService.saveCustomer(customerEntity);
 
         assertThat(savedCustomer).hasNoNullFieldsOrProperties();
-        Assertions.assertEquals(customerEntity.getAge(),savedCustomer.age());
+        Assertions.assertEquals(customerEntity.getAge(), savedCustomer.age());
         Assertions.assertEquals(customerEntity.getName(), savedCustomer.name());
         assertDoesNotThrow(() -> savedCustomer);
     }
@@ -136,35 +136,43 @@ class CustomerServiceTest {
     @DisplayName("Should uptdate a customer when success")
     @Order(6)
     void updateCustomerById_shouldUpdateCostumerWhenSuccess() throws NotFoundException {
-        UpdateRequest updateRequest = new UpdateRequest("Charlie",23,"33130", "US");
+        UpdateRequest updateRequest = new UpdateRequest("Charlie", 23, "33130", "US");
         when(customerRepository.findById(customerEntity.getId())).thenReturn(Optional.of(customerEntity));
 
         Optional<CustomerEntity> customerEntityFound = customerRepository.findById(customerEntity.getId());
         UpdateResponse updateResponse = customerService.updateCustomerById(customerEntity.getId(), updateRequest);
 
-        Assertions.assertEquals(customerEntityFound.get(),customerEntity);
+        Assertions.assertEquals(customerEntityFound.get(), customerEntity);
 
         assertThat(updateResponse).hasNoNullFieldsOrProperties();
-        Assertions.assertEquals(updateRequest.name(),updateResponse.name());
-        Assertions.assertEquals(updateRequest.age(),updateResponse.age());
-        Assertions.assertEquals(updateRequest.countryCode(),updateResponse.countryCode());
-        Assertions.assertEquals(updateRequest.zip(),updateResponse.zip());
+        Assertions.assertEquals(updateRequest.name(), updateResponse.name());
+        Assertions.assertEquals(updateRequest.age(), updateResponse.age());
+        Assertions.assertEquals(updateRequest.countryCode(), updateResponse.countryCode());
+        Assertions.assertEquals(updateRequest.zip(), updateResponse.zip());
 
-        Assertions.assertDoesNotThrow(()-> updateResponse);
+        Assertions.assertDoesNotThrow(() -> updateResponse);
     }
 
     @Test
     @DisplayName("updateCustomerById() should throw NotFoundException")
     @Order(6)
-    void updateCustomerById_shouldThrowNotFoundException()  {
-        UpdateRequest invalidUpdateRequest = new UpdateRequest(null,null,null, null);
+    void updateCustomerById_shouldThrowNotFoundException() {
+        UpdateRequest invalidUpdateRequest = new UpdateRequest(null, null, null, null);
 
         NotFoundException ex = new NotFoundException((String.format(Errors.QC101.getMessage(), customerEntity.getId())), Errors.QC101.getErrorCode());
         when(customerRepository.findById(any())).thenThrow(ex);
 
-        Assertions.assertThrows(ex.getClass(), ()-> customerService.updateCustomerById(customerEntity.getId(), invalidUpdateRequest));
+        Assertions.assertThrows(ex.getClass(), () -> customerService.updateCustomerById(customerEntity.getId(), invalidUpdateRequest));
     }
-        @Test
-    void deleteCustomerById() {
+
+    @Test
+    @DisplayName("deleteCustomerById() should return HttpStatus NO_CONTENT")
+    @Order(7)
+    void deleteCustomerById_shouldReturnHttpStatusNoContent() {
+        when(customerRepository.findById(customerEntity.getId())).thenReturn(Optional.ofNullable(customerEntity));
+
+        HttpStatus httpStatus = customerService.deleteCustomerById(customerEntity.getId());
+
+        Assertions.assertEquals(HttpStatus.NO_CONTENT, httpStatus);
     }
 }
