@@ -51,11 +51,12 @@ public class CustomerService {
     }
 
     public HttpStatus deleteCustomerById(Long id) throws NotFoundException {
-        Optional<CustomerEntity> optionalCustomer = Optional.ofNullable(customerRepository.findById(id).orElseThrow(() -> new NotFoundException(String.format(Errors.QC101.getMessage(), id), Errors.QC101.getErrorCode())));
+        Optional<CustomerEntity> optionalCustomer = customerRepository.findById(id);
         if (optionalCustomer.isPresent()) {
             customerRepository.delete(optionalCustomer.get());
             return HttpStatus.NO_CONTENT;
         }
-        return HttpStatus.CONFLICT;
+        throw new NotFoundException(
+                String.format(Errors.QC101.getMessage(), id), Errors.QC101.getErrorCode());
     }
 }

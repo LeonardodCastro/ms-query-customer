@@ -175,4 +175,12 @@ class CustomerServiceTest {
 
         Assertions.assertEquals(HttpStatus.NO_CONTENT, httpStatus);
     }
+    @Test
+    @DisplayName("deleteCustomerById() should throw NotFoundException")
+    @Order(8)
+    void deleteCustomerById_shouldReturnHttpStatusConflict() {
+        when(customerRepository.findById(customerEntity.getId())).thenThrow(NotFoundException.class);
+
+        assertThrows(NotFoundException.class, ()-> customerService.deleteCustomerById(customerEntity.getId()));
+    }
 }
