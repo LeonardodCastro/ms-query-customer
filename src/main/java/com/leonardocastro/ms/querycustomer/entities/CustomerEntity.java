@@ -1,8 +1,9 @@
 package com.leonardocastro.ms.querycustomer.entities;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.Builder;
-import lombok.Data;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -10,7 +11,13 @@ import javax.persistence.*;
 @Table(name = "customer_entity")
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-@Builder
+@Builder(builderMethodName = "builder")
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@JsonAutoDetect(
+        fieldVisibility = JsonAutoDetect.Visibility.ANY,
+        creatorVisibility = JsonAutoDetect.Visibility.ANY
+)
 public class CustomerEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
